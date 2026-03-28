@@ -1,0 +1,72 @@
+{
+  "$schema": "https://vyges.com/schema/v1/vyges-metadata.schema.json",
+  "name": "vyges-rstmgr-lite",
+  "version": "0.1.0",
+  "description": "Lightweight reset manager with native TL-UL slave interface. Up to 4 configurable reset domains with 2-FF synchronizers, software reset triggers, watchdog timeout reset, and reset cause tracking. No OpenTitan RACL or lifecycle dependencies.",
+  "category": "infrastructure",
+  "license": "Apache-2.0",
+  "owner": "Vyges Inc.",
+  "maturity": "development",
+  "created": "2026-03-28T01:30:05Z",
+  "updated": "2026-03-28T01:30:05Z",
+  "target": ["asic", "fpga"],
+  "design_type": ["digital"],
+  "interfaces": [
+    {
+      "name": "tl",
+      "protocol": "TL-UL",
+      "role": "device",
+      "description": "TileLink-UL slave port for register access"
+    },
+    {
+      "name": "rst_no",
+      "protocol": "custom",
+      "role": "master",
+      "description": "Active-low reset outputs, one per domain (2-FF synchronized deassert)"
+    },
+    {
+      "name": "intr_wdt_bark",
+      "protocol": "custom",
+      "role": "master",
+      "description": "Watchdog bark interrupt output (active high, level)"
+    }
+  ],
+  "registers": [
+    {"name": "RST_EN",        "offset": "0x00", "access": "RW", "description": "Reset domain enable (1=active, deasserted)"},
+    {"name": "RST_STATUS",    "offset": "0x04", "access": "RO", "description": "Reset domain status (1=in reset)"},
+    {"name": "SW_RST",        "offset": "0x08", "access": "RW", "description": "Software reset trigger (write 1, auto-clears)"},
+    {"name": "RST_CAUSE",     "offset": "0x0C", "access": "RO", "description": "Last reset cause: 0=POR, 1=software, 2=watchdog (sticky)"},
+    {"name": "RST_CAUSE_CLR", "offset": "0x10", "access": "WO", "description": "Write 1 to clear RST_CAUSE"},
+    {"name": "WDT_CTRL",      "offset": "0x14", "access": "RW", "description": "[0] watchdog enable, [1] watchdog reset enable"},
+    {"name": "WDT_COUNT",     "offset": "0x18", "access": "RW", "description": "Watchdog timeout value (clk_i cycles)"},
+    {"name": "WDT_KICK",      "offset": "0x1C", "access": "WO", "description": "Write any value to reset watchdog counter"}
+  ],
+  "parameters": [
+    {
+      "name": "NUM_RESETS",
+      "type": "int unsigned",
+      "default": 4,
+      "description": "Number of reset domains (1..4)"
+    },
+    {
+      "name": "HOLD_CYCLES",
+      "type": "int unsigned",
+      "default": 16,
+      "description": "Minimum reset pulse width in clk_i cycles"
+    }
+  ],
+  "dependencies": [
+    {
+      "name": "opentitan-tlul",
+      "reason": "tlul_pkg types (tl_h2d_t, tl_d2h_t, opcodes)"
+    }
+  ],
+  "trust": {
+    "provenance": "vyges-original",
+    "review_status": "unreviewed",
+    "verification_level": "none"
+  },
+  "rtl_files": [
+    "rtl/rstmgr_lite.sv"
+  ]
+}
