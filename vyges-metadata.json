@@ -1,6 +1,7 @@
 {
   "$schema": "https://vyges.com/schema/v1/vyges-metadata.schema.json",
   "name": "vyges-rstmgr-lite",
+  "x-version": "1.0.0",
   "version": "0.1.0",
   "description": "Lightweight reset manager with native TL-UL slave interface. Up to 4 configurable reset domains with 2-FF synchronizers, software reset triggers, watchdog timeout reset, and reset cause tracking. No OpenTitan RACL or lifecycle dependencies.",
   "category": "infrastructure",
