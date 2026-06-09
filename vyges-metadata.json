@@ -9,7 +9,7 @@
   "owner": "Vyges Inc.",
   "maturity": "development",
   "created": "2026-03-28T01:30:05Z",
-  "updated": "2026-06-09T20:33:28Z",
+  "updated": "2026-06-09T21:37:13Z",
   "target": [
     "asic",
     "fpga"
@@ -38,6 +38,24 @@
       "protocol": "custom",
       "role": "master",
       "description": "Watchdog bark interrupt output (active high, level)"
+    },
+    {
+      "type": "clock",
+      "signals": [
+        {
+          "name": "clk_i",
+          "direction": "input"
+        }
+      ]
+    },
+    {
+      "type": "reset",
+      "signals": [
+        {
+          "name": "rst_ni",
+          "direction": "input"
+        }
+      ]
     }
   ],
   "registers": [
@@ -120,5 +138,6 @@
   ],
   "branding": {
     "display_name": "Reset Manager"
-  }
+  },
+  "top_module": "rstmgr_lite"
 }
